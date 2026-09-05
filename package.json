@@ -1,0 +1,25 @@
+{
+  "name": "grevia-monorepo",
+  "version": "1.0.0",
+  "description": "Grevia — Interactive Climate Education Platform Monorepo",
+  "private": true,
+  "workspaces": [
+    "frontend/web",
+    "backend/api",
+    "backend/ai"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:ai\" \"npm run dev:web\"",
+    "dev:api": "npm --prefix backend/api run dev",
+    "dev:ai": "npm --prefix backend/ai run dev",
+    "dev:web": "npm --prefix frontend/web run dev",
+    "worker": "npm --prefix backend/api run worker",
+    "test": "npm --prefix backend/api run test && npm --prefix backend/ai run test",
+    "build": "npm --prefix backend/api run build && npm --prefix backend/ai run build && npm --prefix frontend/web run build",
+    "seed": "npm --prefix backend/api run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.4.5"
+  }
+}

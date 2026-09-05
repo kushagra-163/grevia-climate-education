@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY backend/api/package*.json ./backend/api/
+
+RUN npm install
+
+COPY backend/api ./backend/api
+COPY .env.example .env
+
+WORKDIR /app/backend/api
+RUN npm run build
+
+EXPOSE 3001
+
+CMD ["npm", "start"]

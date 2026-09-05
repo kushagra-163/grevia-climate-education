@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY backend/ai/package*.json ./backend/ai/
+
+RUN npm install
+
+COPY backend/ai ./backend/ai
+COPY .env.example .env
+
+WORKDIR /app/backend/ai
+RUN npm run build
+
+EXPOSE 3002
+
+CMD ["npm", "start"]

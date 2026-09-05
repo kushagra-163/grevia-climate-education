@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: grevia-mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: grevia-redis
+    ports:
+      - '6379:6379'
+    restart: always
+
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.api
+    container_name: grevia-api
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MONGO_URI=mongodb://mongodb:27017/grevia
+      - REDIS_URL=redis://redis:6379
+      - AI_SERVICE_URL=http://ai:3002
+    depends_on:
+      - mongodb
+      - redis
+      - ai
+
+  ai:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.ai
+    container_name: grevia-ai
+    ports:
+      - '3002:3002'
+    environment:
+      - NODE_ENV=production
+      - AI_PORT=3002
+
+volumes:
+  mongo_data:

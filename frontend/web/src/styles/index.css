@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root, .light {
+  /* DAY MODE — EARTHLIGHT */
+  --bg-primary: #FBF9F4;        /* Warm ivory / light cream */
+  --bg-secondary: #F2EEE5;      /* Soft warm stone / pale sand */
+  --surface: #FFFFFF;           /* Warm white card surface */
+  --surface-elevated: #F4F0E6;  /* Light stone elevated surface */
+  
+  --primary: #1C3F34;           /* Deep forest green */
+  --primary-hover: #153229;
+  --primary-soft: #E2ECE8;      /* Muted soft sage bg */
+  --primary-light: #2D6A4F;     /* Forest green accent */
+
+  --accent: #C85A32;            /* Earthy terracotta / clay */
+  --accent-hover: #B34E29;
+  --accent-soft: #FDF0EB;
+
+  --amber: #D97706;             /* Warm golden/amber */
+  --amber-soft: #FEF3C7;
+
+  --text-primary: #181E1B;      /* Deep charcoal / forest-black */
+  --text-secondary: #526058;    /* Muted slate / warm gray */
+  --text-muted: #78877E;        /* Subtle gray */
+
+  --border: #E2DDD4;            /* Soft stone / sage-gray border */
+  --border-strong: #C8C2B7;
+
+  --glass-bg: rgba(251, 249, 244, 0.9);
+  --glass-border: rgba(226, 221, 212, 0.85);
+  --glass-card: rgba(255, 255, 255, 0.95);
+}
+
+.dark {
+  /* NIGHT MODE — FOREST NIGHT */
+  --bg-primary: #0F1715;        /* Deep charcoal with natural green undertone */
+  --bg-secondary: #151E1B;      /* Dark forest charcoal */
+  --surface: #1C2623;           /* Lighter charcoal/forest surface */
+  --surface-elevated: #24322C;  /* Elevated dark slate/forest */
+
+  --primary: #40916C;           /* Soft natural forest green */
+  --primary-hover: #52B788;
+  --primary-soft: #1A3329;      /* Dark sage container background */
+  --primary-light: #74C69D;     /* Bright sage text/icon */
+
+  --accent: #E07A5F;            /* Muted terracotta / clay */
+  --accent-hover: #F28F75;
+  --accent-soft: #38211A;
+
+  --amber: #F59E0B;             /* Warm amber/golden */
+  --amber-soft: #332612;
+
+  --text-primary: #F3F4F6;      /* Warm off-white */
+  --text-secondary: #9CA3AF;    /* Muted cool-gray / sage-gray */
+  --text-muted: #6B7280;
+
+  --border: #2E3D37;            /* Subtle dark sage border */
+  --border-strong: #3D5249;
+
+  --glass-bg: rgba(21, 30, 27, 0.9);
+  --glass-border: rgba(46, 61, 55, 0.75);
+  --glass-card: rgba(28, 38, 35, 0.85);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: var(--glass-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+}

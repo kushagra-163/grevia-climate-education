@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grevia — Interactive Climate Education Platform</title>
+    <meta name="description" content="Learn Climate. Take Action. Make an Impact with Grevia's AI Eco-Coach, adaptive quizzes, and climate analytics." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script>
+      (function() {
+        var saved = localStorage.getItem('grevia_theme');
+        var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'night');
+        if (theme === 'night') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-earth-bg text-earth-text font-['Plus_Jakarta_Sans',sans-serif] antialiased min-h-screen transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

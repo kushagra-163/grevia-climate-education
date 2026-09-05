@@ -1,0 +1,46 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Grevia REST API Specification",
+    "description": "Production-grade API for Grevia Interactive Climate Education Platform",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/auth/signup": {
+      "post": {
+        "summary": "Register a new student, teacher, or admin account",
+        "responses": { "201": { "description": "User created with tokens" } }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Authenticate user and issue tokens",
+        "responses": { "200": { "description": "Access token and user info" } }
+      }
+    },
+    "/api/quiz/generate": {
+      "post": {
+        "summary": "Generate an adaptive climate quiz (hides correct answers)",
+        "responses": { "201": { "description": "Sanitized quiz instance" } }
+      }
+    },
+    "/api/quiz/{quizId}/submit": {
+      "post": {
+        "summary": "Submit quiz answers, adjust difficulty level, and log points ledger",
+        "responses": { "200": { "description": "Score, points earned, new adaptive level" } }
+      }
+    },
+    "/api/ai/chat": {
+      "post": {
+        "summary": "Send query to AI Eco-Coach",
+        "responses": { "200": { "description": "Eco-Coach response" } }
+      }
+    },
+    "/api/climate/current": {
+      "get": {
+        "summary": "Retrieve real-time NASA EONET and NASA POWER climate snapshot",
+        "responses": { "200": { "description": "Climate metrics" } }
+      }
+    }
+  }
+}
