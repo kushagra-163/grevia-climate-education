@@ -81,4 +81,24 @@ describe('QuizService Adaptive Engine Tests', () => {
     expect(result.percentage).toBe(80); // 4 / 5 = 80%
     expect(result.pointsEarned).toBeGreaterThan(0);
   });
+
+  it('should support correct answer positions across A, B, C, and D with option shuffling', async () => {
+    const quiz = await QuizService.generateQuiz({ userId, topic: 'renewable_energy', numQuestions: 5 });
+    const correctAnswers = quiz.questions.map((q) => q.correctAnswer);
+
+    // Verify correct answers use valid letters A, B, C, D
+    correctAnswers.forEach((ans) => {
+      expect(['A', 'B', 'C', 'D']).toContain(ans);
+    });
+
+    // Test 100% score submission
+    const result = await QuizService.submitQuiz(userId, quiz._id.toString(), {
+      answers: correctAnswers,
+      responseTimes: [4, 5, 6, 5, 4],
+    });
+
+    expect(result.score).toBe(5);
+    expect(result.percentage).toBe(100);
+    expect(result.detailedResults.every((r: any) => r.isCorrect)).toBe(true);
+  });
 });

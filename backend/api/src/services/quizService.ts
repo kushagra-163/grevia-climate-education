@@ -76,18 +76,43 @@ export class QuizService {
       throw new AppError(`No questions available for topic ${dto.topic}`, 404, 'NO_QUESTIONS');
     }
 
+    // Shuffle option positions for each question in this quiz session
+    const letterToIndex: Record<string, number> = { A: 0, B: 1, C: 2, D: 3 };
+    const indexToLetter = ['A', 'B', 'C', 'D'];
+
+    const processedQuestions = selected.map((q) => {
+      const origCorrIndex = letterToIndex[q.correctAnswer.toUpperCase()] ?? 0;
+
+      const indexedOptions = q.options.map((optText, i) => ({
+        optText,
+        isCorrect: i === origCorrIndex,
+      }));
+
+      // Randomize option order for this attempt
+      for (let i = indexedOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indexedOptions[i], indexedOptions[j]] = [indexedOptions[j], indexedOptions[i]];
+      }
+
+      const shuffledOptions = indexedOptions.map((item) => item.optText);
+      const newCorrIndex = indexedOptions.findIndex((item) => item.isCorrect);
+      const newCorrectAnswer = indexToLetter[newCorrIndex] || 'A';
+
+      return {
+        question: q.question,
+        topic: q.topic,
+        level: q.level,
+        options: shuffledOptions,
+        correctAnswer: newCorrectAnswer,
+        explanation: q.explanation,
+      };
+    });
+
     const quiz = await Quiz.create({
       userId: dto.userId,
       topic: dto.topic,
       difficulty: targetDifficulty,
-      questions: selected.map((q) => ({
-        question: q.question,
-        topic: q.topic,
-        level: q.level,
-        options: q.options,
-        correctAnswer: q.correctAnswer,
-        explanation: q.explanation,
-      })),
+      questions: processedQuestions,
     });
 
     return quiz;
